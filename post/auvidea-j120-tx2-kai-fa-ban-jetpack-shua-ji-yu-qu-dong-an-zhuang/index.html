@@ -1,0 +1,269 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Auvidea J120 TX2开发板 Jetpack刷机与驱动安装 | shen7</title>
+<link rel="shortcut icon" href="https://shen7code.github.io/favicon.ico?v=1651757875402">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shen7code.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Auvidea J120 TX2开发板 Jetpack刷机与驱动安装 | shen7 - Atom Feed" href="https://shen7code.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="一、刷机准备
+
+下载Nvidia SDK Manager
+
+
+网址：https://developer.nvidia.com/nvidia-sdk-manager
+安装：sudo apt install ./sdkmanager_[vers..." />
+    <meta name="keywords" content="Jetson" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shen7code.github.io">
+  <img class="avatar" src="https://shen7code.github.io/images/avatar.png?v=1651757875402" alt="">
+  </a>
+  <h1 class="site-title">
+    shen7
+  </h1>
+  <p class="site-description">
+    keep coding...
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="https://shen7code.github.io/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="https://shen7code.github.io/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Auvidea J120 TX2开发板 Jetpack刷机与驱动安装
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-05-05
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://shen7code.github.io/tag/NiIwYYhf6/" class="post-tag">
+                  # Jetson
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="一-刷机准备">一、刷机准备</h3>
+<ol>
+<li>下载<strong>Nvidia SDK Manager</strong></li>
+</ol>
+<ul>
+<li>网址：https://developer.nvidia.com/nvidia-sdk-manager</li>
+<li>安装：<code>sudo apt install ./sdkmanager_[version]-[build#]_amd64.deb</code></li>
+<li>打开客户端
+<ul>
+<li>普通打开：命令行输入<code>sdkmanager</code></li>
+<li>打开全部版本Jetpack：<code>sdkmanager --archivedversions</code></li>
+</ul>
+</li>
+<li>登录
+<ul>
+<li>推荐下载最新版本Nvidia SDK Manager，旧版本用帐号密码登录可能登不上</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>下载Auvidea驱动</li>
+</ol>
+<ul>
+<li>驱动网址：https://auvidea.eu/firmware/
+<ul>
+<li>根据板子型号、所需安装的Jetpack版本确定下载的驱动文件</li>
+</ul>
+</li>
+<li>Auvidea官方刷机文档：https://ardupilot.org/dev/docs/companion-computer-nvidia-tx2.html</li>
+</ul>
+<h3 id="二-刷机">二、刷机</h3>
+<ol>
+<li>版本</li>
+</ol>
+<ul>
+<li>jetpack4.6+4.6驱动 不可行，usb驱动刷机不成功</li>
+<li>jetpack3.3+3.3驱动 可行，对应tensorrt4，版本较低</li>
+<li>jetpack4.3+4.3驱动 可行，对应tensorrt6</li>
+<li>jetpack4.4+4.3驱动 可行，对应tensorrt7，最终使用</li>
+</ul>
+<ol start="2">
+<li>打开sdkmanager</li>
+</ol>
+<ul>
+<li>第一步，选择产品类型，选择Jetson</li>
+<li>第二步，选择安装包，有主机端Host Machine 和目标端Target Hardware，主机端不要选，目标端选择TX2</li>
+<li>第三步，选择Jetpack版本</li>
+<li>下一步</li>
+<li>勾选同意协议，下一步</li>
+<li>开始下载，等待下载完成</li>
+</ul>
+<ol start="3">
+<li>弹出SDK Manager is about to flash your Jetson界面</li>
+</ol>
+<ul>
+<li>复制驱动文件至目标文件夹，非Auvidea开发板不进行这一步
+<ul>
+<li>参考Auvidea官方刷机文档</li>
+</ul>
+</li>
+</ul>
+<pre><code>cp auvidea-kernel-J90-J120-v1.6/auvidea-TX2-Jetpack/dtb/tegra186-quill-p3310-1000-a00-00-base.dtb 64_TX2/Linux_for_Tegra/kernel/dtb
+cp auvidea-kernel-J90-J120-v1.6/auvidea-TX2-Jetpack/dtb/tegra186-quill-p3310-1000-c03-00-base.dtb 64_TX2/Linux_for_Tegra/kernel/dtb
+cp auvidea-kernel-J90-J120-v1.6/auvidea-TX2-Jetpack/dtb/tegra186-quill-p3310-1000-c03-00-dsi-hdmi-dp.dtb 64_TX2/Linux_for_Tegra/kernel/dtb
+</code></pre>
+<ul>
+<li>选择Manual Setup手动安装</li>
+<li>将开发板置于恢复模式</li>
+<li>将TX2和主机用网线连接在用一个路由器或者交换机上，用ucb线将主机和TX2连接在一起。让TX2连接上电源适配器，但是断电，按下并松开TX2的POWER键；按下并保持FORCE RECOVERY键；在此期间按下并松开RESET键；等待2秒后松开FORCE RECOVERY键</li>
+<li>J120开发板只需断电，按下POWER键上电过几秒松开，即置于恢复模式</li>
+<li>点击Flash。出错则重新设置恢复模式</li>
+</ul>
+<ol start="4">
+<li>将TX2连接上显示器，待亮屏，此时系统已刷好</li>
+</ol>
+<ul>
+<li>选择语言，时区，设置用户名和密码</li>
+<li>查看IP</li>
+<li>在主机端选择网络连接，输入开发板的IP、用户名、密码</li>
+<li>等待安装Target Components</li>
+<li>完毕</li>
+</ul>
+<h3 id="三-错误">三、错误</h3>
+<ol>
+<li><code>INFO: Flash Jetson TX2 - flash: UnicodeDecodeError: ‘utf-8’ codec can’t decode byte 0xa4 in position 16: invalid start byte</code></li>
+</ol>
+<ul>
+<li>出现在Jetpack4.6版本刷机时</li>
+<li>解决方法：在二、3.弹出SDK Manager is about to flash your Jetson界面时不使用sdkmanager进行Flash</li>
+<li>使用生成的OS文件夹中的脚本进行Flash</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%B8%80-%E5%88%B7%E6%9C%BA%E5%87%86%E5%A4%87">一、刷机准备</a></li>
+<li><a href="#%E4%BA%8C-%E5%88%B7%E6%9C%BA">二、刷机</a></li>
+<li><a href="#%E4%B8%89-%E9%94%99%E8%AF%AF">三、错误</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shen7code.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
